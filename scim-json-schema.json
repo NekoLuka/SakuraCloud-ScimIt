@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "https://raw.githubusercontent.com/NekoLuka/SakuraCloud-ScimIt/main/scim-json-schema.json",
+  "title": "SCIM definition schema",
+  "description": "The definition of SCIM resources",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "schemas": {
+        "description": "Should be: urn:ietf:params:scim:schemas:core:2.0:Schema",
+        "type": "array",
+        "minContains": 1,
+        "maxContains": 1,
+        "items": {"const": "urn:ietf:params:scim:schemas:core:2.0:Schema"}
+      },
+      "id": {
+        "description": "The URN of the resource",
+        "type": "string"
+      },
+      "name": {
+        "description": "Name of the schema",
+        "type": "string"
+      },
+      "description": {
+        "description": "Description of the schema",
+        "type": "string"
+      },
+      "attributes": {
+        "description": "The schemas attributes",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {"$ref": "#/$defs/name"},
+            "type": {"$ref": "#/$defs/type"},
+            "multiValued": {"$ref": "#/$defs/multiValued"},
+            "description": {"$ref": "#/$defs/description"},
+            "required": {"$ref": "#/$defs/required"},
+            "caseExact": {"$ref": "#/$defs/caseExact"},
+            "mutability": {"$ref": "#/$defs/mutability"},
+            "returned": {"$ref": "#/$defs/returned"},
+            "uniqueness": {"$ref": "#/$defs/uniqueness"},
+            "canonicalValues": {"$ref": "#/$defs/canonicalValues"},
+            "referenceTypes": {"$ref": "#/$defs/referenceTypes"},
+            "subAttributes": {
+              "description": "Sub attributes for a complex type",
+              "type": "array",
+              "minContains": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {"$ref": "#/$defs/name"},
+                  "type": {"$ref": "#/$defs/type"},
+                  "multiValued": {"$ref": "#/$defs/multiValued"},
+                  "description": {"$ref": "#/$defs/description"},
+                  "required": {"$ref": "#/$defs/required"},
+                  "caseExact": {"$ref": "#/$defs/caseExact"},
+                  "mutability": {"$ref": "#/$defs/mutability"},
+                  "returned": {"$ref": "#/$defs/returned"},
+                  "uniqueness": {"$ref": "#/$defs/uniqueness"},
+                  "canonicalValues": {"$ref": "#/$defs/canonicalValues"},
+                  "referenceTypes": {"$ref": "#/$defs/referenceTypes"}
+                },
+                "required": ["name", "type"],
+                "allOf": [
+                  {"$ref": "#/$defs/add-subAttributes-to-complex-type"},
+                  {"$ref": "#/$defs/add-referenceTypes-to-reference-type"},
+                  {"$ref": "#/$defs/give-password-field-correct-security-settings"}
+                ]
+              }
+            }
+          },
+          "required": ["name", "type"],
+          "allOf": [
+            {"$ref": "#/$defs/add-subAttributes-to-complex-type"},
+            {"$ref": "#/$defs/add-referenceTypes-to-reference-type"},
+            {"$ref": "#/$defs/give-password-field-correct-security-settings"}
+          ]
+        }
+      }
+    },
+    "required": ["schemas", "id"]
+  },
+
+  "$defs": {
+    "$comment": "Attributes",
+    "name": {
+      "description": "Name of the attribute",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type of the attribute",
+      "type": "string",
+      "enum": ["string", "boolean", "decimal", "integer", "datetime", "reference", "complex"]
+    },
+    "multiValued": {
+      "description": "Has the attribute multiple values?",
+      "type": "boolean"
+    },
+    "description": {
+      "description": "Description of the attribute",
+      "type": "string"
+    },
+    "required": {
+      "description": "Is the attribute required?",
+      "type": "boolean"
+    },
+    "caseExact": {
+      "description": "Is the attribute case sensitive?",
+      "type": "boolean"
+    },
+    "mutability": {
+      "description": "Access permissions",
+      "type": "string",
+      "enum": ["readOnly", "readWrite", "immutable", "writeOnly"]
+    },
+    "returned": {
+      "description": "Is this item returned?",
+      "type": "string",
+      "enum": ["always", "never", "default", "request"]
+    },
+    "uniqueness": {
+      "description": "How unique is the item?",
+      "type": "string",
+      "enum": ["none", "server", "global"]
+    },
+    "canonicalValues": {
+      "description": "Suggested values",
+      "type": "array",
+      "uniqueItems": true,
+      "minContains": 1
+    },
+    "referenceTypes": {
+      "description": "Array of reference types",
+      "type": "array",
+      "uniqueItems": true,
+      "minContains": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "add-subAttributes-to-complex-type": {
+      "if": {
+          "properties": {
+            "type": {"const": "complex"}
+          }
+        },
+        "then": {
+          "required": ["subAttributes"]
+        }
+    },
+    "give-password-field-correct-security-settings": {
+      "if": {
+        "properties": {
+          "name": {"const": "password"}
+        }
+      },
+      "then": {
+        "properties": {
+          "mutability": {"const": "writeOnly"},
+          "returned": {"const": "never"}
+        }
+      }
+    },
+    "add-referenceTypes-to-reference-type": {
+      "if": {
+        "properties": {
+          "type": {"const": "reference"}
+        }
+      },
+      "then": {
+        "required": ["referenceTypes"]
+      }
+    }
+  }
+}
+
