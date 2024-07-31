@@ -16,7 +16,11 @@
       },
       "id": {
         "description": "The URN of the resource",
-        "type": "string"
+        "type": "string",
+        "enum": [
+          "urn:ietf:params:scim:schemas:core:2.0:User",
+          "urn:ietf:params:scim:schemas:core:2.0:Group"
+        ]
       },
       "name": {
         "description": "Name of the schema",
@@ -97,7 +101,8 @@
     },
     "multiValued": {
       "description": "Has the attribute multiple values?",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "description": {
       "description": "Description of the attribute",
@@ -105,26 +110,31 @@
     },
     "required": {
       "description": "Is the attribute required?",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "caseExact": {
       "description": "Is the attribute case sensitive?",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "mutability": {
       "description": "Access permissions",
       "type": "string",
-      "enum": ["readOnly", "readWrite", "immutable", "writeOnly"]
+      "enum": ["readOnly", "readWrite", "immutable", "writeOnly"],
+      "default": "readWrite"
     },
     "returned": {
       "description": "Is this item returned?",
       "type": "string",
-      "enum": ["always", "never", "default", "request"]
+      "enum": ["always", "never", "default", "request"],
+      "default": "default"
     },
     "uniqueness": {
       "description": "How unique is the item?",
       "type": "string",
-      "enum": ["none", "server", "global"]
+      "enum": ["none", "server", "global"],
+      "default": "none"
     },
     "canonicalValues": {
       "description": "Suggested values",
@@ -138,9 +148,12 @@
       "uniqueItems": true,
       "minContains": 1,
       "items": {
-        "type": "string"
+        "type": "string",
+        "enum": ["User", "Group", "external", "uri"]
       }
     },
+
+    "$comment": "All conditions",
     "add-subAttributes-to-complex-type": {
       "if": {
           "properties": {
