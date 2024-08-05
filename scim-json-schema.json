@@ -71,7 +71,8 @@
                 "allOf": [
                   {"$ref": "#/$defs/add-subAttributes-to-complex-type"},
                   {"$ref": "#/$defs/add-referenceTypes-to-reference-type"},
-                  {"$ref": "#/$defs/give-password-field-correct-security-settings"}
+                  {"$ref": "#/$defs/give-password-field-correct-security-settings"},
+                  {"$ref": "#/$defs/if-boolean-no-caseExact"}
                 ]
               }
             }
@@ -80,7 +81,8 @@
           "allOf": [
             {"$ref": "#/$defs/add-subAttributes-to-complex-type"},
             {"$ref": "#/$defs/add-referenceTypes-to-reference-type"},
-            {"$ref": "#/$defs/give-password-field-correct-security-settings"}
+            {"$ref": "#/$defs/give-password-field-correct-security-settings"},
+            {"$ref": "#/$defs/if-boolean-no-caseExact"}
           ]
         }
       }
@@ -185,6 +187,20 @@
       },
       "then": {
         "required": ["referenceTypes"]
+      }
+    },
+    "if-boolean-no-caseExact": {
+      "if": {
+        "not": {
+          "properties": {
+            "type": {"enum": ["string", "reference"]}
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "caseExact": {"const": false}
+        }
       }
     }
   }
