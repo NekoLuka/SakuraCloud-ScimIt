@@ -1,0 +1,266 @@
+- schemas:
+    - "urn:ietf:params:scim:schemas:core:2.0:Schema"
+  id: "urn:ietf:params:scim:schemas:core:2.0:User"
+  name: "User" # Optional
+  description: "An extensive example user schema"  # Optional
+  attributes:
+    - name: "userName"
+      type: "string"
+      multiValued: false
+      description: "Username for user"
+      required: true
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "server"
+    - name: "name"
+      type: "complex"
+      multiValued: false
+      description: "Name of the user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+      subAttributes:
+        - name: "formatted"
+          type: string
+          multiValued: false
+          description: "The formatted name"
+          required: false
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "familyName"
+          type: string
+          multiValued: false
+          description: "The family name"
+          required: false
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "givenName"
+          type: string
+          multiValued: false
+          description: "The given name"
+          required: false
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "middleName"
+          type: string
+          multiValued: false
+          description: "The middle name"
+          required: false
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "honorificPrefix"
+          type: string
+          multiValued: false
+          description: "The honorific prefix"
+          required: false
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "honorificSuffix"
+          type: string
+          multiValued: false
+          description: "The honorific suffix"
+          required: false
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+    - name: "displayName"
+      type: "string"
+      multiValued: false
+      description: "Display name for user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+    - name: "nickName"
+      type: "string"
+      multiValued: false
+      description: "Nickname for user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+    - name: "profileUrl"
+      type: "reference"
+      multiValued: false
+      description: "Profile URL for user"
+      required: false
+      caseExact: true
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+      referenceTypes:
+        - "external"
+    - name: "title"
+      type: "string"
+      multiValued: false
+      description: "Title for user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+    - name: "preferredLanguage"
+      type: "string"
+      multiValued: false
+      description: "Language for user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+    - name: "locale"
+      type: "string"
+      multiValued: false
+      description: "Locale for user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+    - name: "timezone"
+      type: "string"
+      multiValued: false
+      description: "Timezone for user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+    - name: "active"
+      type: "boolean"
+      multiValued: false
+      description: "Is user active?"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+    - name: "password"
+      type: "string"
+      multiValued: false
+      description: "Password for user"
+      required: false
+      caseExact: false
+      mutability: "writeOnly"
+      returned: "never"
+      uniqueness: "none"
+    - name: "emails"
+      type: "complex"
+      multiValued: true
+      description: "Email addresses of the user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+      canonicalValues:
+        - "home"
+        - "work"
+        - "other"
+      subAttributes:
+        - name: "type"
+          type: "string"
+          multiValued: false
+          description: "Type of email address"
+          required: true
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "primary"
+          type: "boolean"
+          multiValued: false
+          description: "Is this email address the primary address"
+          required: false
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "display"
+          type: "string"
+          multiValued: false
+          description: "Email address for display"
+          required: true
+          caseExact: false
+          mutability: "readOnly"
+          returned: "default"
+          uniqueness: "none"
+        - name: "value"
+          type: "string"
+          multiValued: false
+          description: "Email address"
+          required: true
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+    - name: "phoneNumbers"
+      type: "complex"
+      multiValued: true
+      description: "Phone numbers of the user"
+      required: false
+      caseExact: false
+      mutability: "readWrite"
+      returned: "default"
+      uniqueness: "none"
+      canonicalValues:
+        - "home"
+        - "work"
+        - "other"
+        - "mobile"
+        - "fax"
+        - "pager"
+      subAttributes:
+        - name: "type"
+          type: "string"
+          multiValued: false
+          description: "Type of phone number"
+          required: true
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "primary"
+          type: "boolean"
+          multiValued: false
+          description: "Is this phone number the primary number"
+          required: false
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+        - name: "display"
+          type: "string"
+          multiValued: false
+          description: "Phone number for display"
+          required: true
+          caseExact: false
+          mutability: "readOnly"
+          returned: "default"
+          uniqueness: "none"
+        - name: "value"
+          type: "string"
+          multiValued: false
+          description: "Phone number"
+          required: true
+          caseExact: false
+          mutability: "readWrite"
+          returned: "default"
+          uniqueness: "none"
+# Not fully finished yet
