@@ -21,4 +21,5 @@ class Validator:
         return js.validate(instance=schema, schema=self.jsonschema)
 
     def enforce_schema(self, scim_request: dict) -> bool:
+        # Enforce by dynamicly builing a jsonschema based on the given schema
         pass
