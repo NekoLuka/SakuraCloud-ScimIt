@@ -23,3 +23,12 @@ class Validator:
     def enforce_schema(self, scim_request: dict) -> bool:
         # Enforce by dynamicly builing a jsonschema based on the given schema
         pass
+
+    def build_incoming_create_enforcement_schema(self, schema_index: int):
+        schema = self.schemas[schema_index]
+
+    def build_incoming_update_enforcement_schema(self, schema_index: int):
+        schema = self.schemas[schema_index]
+
+    def build_outgoing_enforcement_schema(self, schema_index: int):
+        schema = self.schemas[schema_index]

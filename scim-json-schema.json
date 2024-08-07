@@ -69,7 +69,6 @@
                 },
                 "required": ["name", "type"],
                 "allOf": [
-                  {"$ref": "#/$defs/add-subAttributes-to-complex-type"},
                   {"$ref": "#/$defs/add-referenceTypes-to-reference-type"},
                   {"$ref": "#/$defs/give-password-field-correct-security-settings"},
                   {"$ref": "#/$defs/if-boolean-no-caseExact"}
@@ -84,10 +83,35 @@
             {"$ref": "#/$defs/give-password-field-correct-security-settings"},
             {"$ref": "#/$defs/if-boolean-no-caseExact"}
           ]
+        },
+        "contains": {
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "const": "id"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "const": "externalId"
+                }
+              }
+            }
+          ]
         }
       }
     },
-    "required": ["schemas", "id"]
+    "required": ["schemas", "id"],
+    "allOf": [
+      {"$ref": "#/$defs/set-required-attributes-for-user-schema"}
+    ]
   },
 
   "$defs": {
@@ -202,7 +226,34 @@
           "caseExact": {"const": false}
         }
       }
+    },
+    "set-required-attributes-for-user-schema": {
+      "if": {
+        "properties": {
+          "id": {"const": "urn:ietf:params:scim:schemas:core:2.0:User"}
+        }
+      },
+      "then": {
+        "properties": {
+          "attributes": {
+            "allOf": [
+              {
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "const": "userName"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
     }
   }
 }
+
 
